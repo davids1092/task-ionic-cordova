@@ -1,3 +1,39 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+
+  <!-- MENU -->
+  <ion-menu contentId="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Menú</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+
+        <ion-menu-toggle auto-hide="true" *ngIf="fireBaseConfig.taskEditEnabled">
+          <ion-item routerLink="/todo" routerDirection="root">
+            <ion-icon name="flash-outline" slot="start"></ion-icon>
+            
+            <ion-label>Tareas</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+
+        <ion-menu-toggle auto-hide="true" *ngIf="fireBaseConfig.categoriesEnabled">
+          <ion-item routerLink="/categories" routerDirection="root">
+            <ion-icon name="folder-outline" slot="start"></ion-icon>
+            <ion-label>Categorías</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <!-- CONTENIDO -->
+  <div class="ion-page" id="main-content">
+    <ion-router-outlet></ion-router-outlet>
+  </div>
+
 </ion-app>
