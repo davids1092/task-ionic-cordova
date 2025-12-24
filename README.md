@@ -6,8 +6,8 @@ Estas son las instrucciones para correrlo en un emulador o generar el APK.
 ---
 
 # descargar repositorio
-git clone <url-del-repositorio>
-cd <nombre-del-proyecto>
+git clone https://github.com/davids1092/task-ionic-cordova.git
+cd ionic-taask-cordova
 npm install
 
 ## Requisitos
