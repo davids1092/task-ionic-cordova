@@ -15,9 +15,11 @@ bootstrapApplication(AppComponent, {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
+    // PROVIDER NECESARIO PARA USO DE STORAGE
      importProvidersFrom(
       IonicStorageModule.forRoot()
     ),
+    // PROVIDERS NECESARIOS PARA USO DE FIREBASE
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideRemoteConfig(() => getRemoteConfig())
   ],

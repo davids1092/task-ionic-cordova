@@ -20,6 +20,7 @@ export class AppComponent implements  OnInit {
   }
 
  async ngOnInit() {
+  // INICIAR CONEXION CON FIREBASE
     await this.fireBaseConfig.init();
   }
 }

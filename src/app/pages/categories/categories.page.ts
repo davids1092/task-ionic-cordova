@@ -12,7 +12,7 @@ import { createOutline, trashOutline } from 'ionicons/icons';
   templateUrl: './categories.page.html',
   styleUrls: ['./categories.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,AppIonicModule,IonIcon]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, AppIonicModule, IonIcon]
 })
 export class CategoriesPage {
 
@@ -21,13 +21,13 @@ export class CategoriesPage {
   editing: Category | null = null;
 
   constructor(public categoryService: CategoryService) {
-    addIcons({createOutline,trashOutline });
+    addIcons({ createOutline, trashOutline });
   }
 
   get categories(): Category[] {
     return this.categoryService.getCategories();
   }
-
+  // GUARDAR CATEGORIA
   save() {
     if (!this.name.trim()) return;
 
@@ -43,17 +43,17 @@ export class CategoriesPage {
 
     this.reset();
   }
-
+  // EDITAR CATEGORIA
   edit(category: Category) {
     this.editing = category;
     this.name = category.name;
     this.color = category.color;
   }
-
+  // BORRAR CATEGORIA
   delete(id: string) {
     this.categoryService.deleteCategory(id);
   }
-
+  // REINICIAR FORMULARIO
   reset() {
     this.name = '';
     this.color = '#3dc2ff';

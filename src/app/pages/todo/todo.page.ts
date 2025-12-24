@@ -14,7 +14,7 @@ import { createOutline, trashOutline } from 'ionicons/icons';
   templateUrl: './todo.page.html',
   styleUrls: ['./todo.page.scss'],
   standalone: true,
-  imports: [ CommonModule, FormsModule, AppIonicModule,IonIcon]
+  imports: [CommonModule, FormsModule, AppIonicModule, IonIcon]
 })
 export class TodoPage implements OnInit {
   newTask = '';
@@ -23,50 +23,49 @@ export class TodoPage implements OnInit {
   editingTaskId: string | null = null;
 
   constructor(public taskService: TaskService,
-      public categoryService: CategoryService
-  ) { 
-    addIcons({createOutline,trashOutline });
+    public categoryService: CategoryService
+  ) {
+    addIcons({ createOutline, trashOutline });
   }
 
   ngOnInit() {
   }
 
-  get tasks(): Task[] {
-    return this.taskService.getTasks();
+  // CREAR Y ACTULIZAR TAREA
+  saveTask() {
+    if (!this.newTask.trim() || !this.taskCategoryId) return;
+
+    if (this.editingTaskId) {
+      this.taskService.updateTask(
+        this.editingTaskId,
+        this.newTask,
+        this.taskCategoryId
+      );
+    } else {
+      this.taskService.addTask(
+        this.newTask,
+        this.taskCategoryId
+      );
+    }
+
+    this.resetForm();
+  }
+  // EDITAR TAREA
+  editTask(task: Task) {
+    this.editingTaskId = task.id;
+    this.newTask = task.title;
+    this.taskCategoryId = task.categoryId ?? null;
+  }
+  // REINICIAR FORMULARIO
+  resetForm() {
+    this.newTask = '';
+    this.taskCategoryId = null;
+    this.editingTaskId = null;
   }
 
-saveTask() {
-  if (!this.newTask.trim() || !this.taskCategoryId) return;
-
-  if (this.editingTaskId) {
-    this.taskService.updateTask(
-      this.editingTaskId,
-      this.newTask,
-      this.taskCategoryId
-    );
-  } else {
-    this.taskService.addTask(
-      this.newTask,
-      this.taskCategoryId
-    );
-  }
-
-  this.resetForm();
-}
-editTask(task: Task) {
-  this.editingTaskId = task.id;
-  this.newTask = task.title;
-  this.taskCategoryId = task.categoryId ?? null;
-}
-resetForm() {
-  this.newTask = '';
-  this.taskCategoryId = null;
-  this.editingTaskId = null;
-}
 
 
 
-  
 
 
   toggleTask(task: Task) {
@@ -83,27 +82,27 @@ resetForm() {
   // CATEGORY
 
   get categories(): Category[] {
-  return this.categoryService.getCategories();
-}
+    return this.categoryService.getCategories();
+  }
 
-get filteredTasks() {
-  const tasks = this.taskService.getTasks();
-  if (!this.selectedCategoryId) return tasks;
-  return tasks.filter(t => t.categoryId === this.selectedCategoryId);
-}
+  get filteredTasks() {
+    const tasks = this.taskService.getTasks();
+    if (!this.selectedCategoryId) return tasks;
+    return tasks.filter(t => t.categoryId === this.selectedCategoryId);
+  }
 
-getCategoryName(categoryId?: string): string {
-  if (!categoryId) return '';
-  return this.categories.find(c => c.id === categoryId)?.name ?? '';
-}
+  getCategoryName(categoryId?: string): string {
+    if (!categoryId) return '';
+    return this.categories.find(c => c.id === categoryId)?.name ?? '';
+  }
 
-getCategoryColor(categoryId?: string): string {
-  if (!categoryId) return '#cccccc';
-  return this.categories.find(c => c.id === categoryId)?.color ?? '#cccccc';
-}
-async ionViewWillEnter() {
-  await this.categoryService.loadCategories();
-}
+  getCategoryColor(categoryId?: string): string {
+    if (!categoryId) return '#cccccc';
+    return this.categories.find(c => c.id === categoryId)?.color ?? '#cccccc';
+  }
+  async ionViewWillEnter() {
+    await this.categoryService.loadCategories();
+  }
 
 
 }
